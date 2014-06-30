@@ -1,0 +1,79 @@
+<html>
+<head>
+	<title>Javascript Demo</title>
+	<style>
+		body {
+			background-color:black;
+			font-family: monospace;
+			color:white;
+			font-size:50px;
+			text-align: center;
+			margin-top:20%;
+		}
+
+		#magic{
+			color: #777;
+			border-right: 1px solid #777;
+			padding-right: 7px;
+			display: inline;
+		}
+	</style>
+</head>
+<body>
+
+	Coding is <div id="magic"></div>
+
+	<script>
+	// console.log(el); // to test if my immediate function works! -> 
+	// if i dont put words, el inside a function -> anyone can call it outside of the function!
+
+// Using immediate function -> advantage - used to prevent exposure of global variables -> method: below line -> () at the end -> self calling it -> see next line for function
+// syntax --> ( function( ) {console.log( "I'm an immediate function!" );} ();
+
+	// javascript cannot spot whitespace between char -> aim" manually append 'whitespace' in word that javascript understands - '&nbsp'
+		(function(){
+		var words = ["fun", "exciting", "about not giving up", "being helpful", "being open", "what I learned at CodingDojo!"],
+			el = document.getElementById('magic'),
+			word_counter = 0,
+			character_counter = 0;
+
+		function updateText() 
+		// aim: append each char/ whitespace to div "magic"
+		{ 	// original -> it skips white space -> only append char -> overlook white space
+			if (words[word_counter][character_counter]==' ')
+			{
+				// append javascript whitespace '&nbsp' to div 'magic' if ' ' in word is found -> since javascript cannot detect whitespace in word -> we have to manually added it!
+
+				console.log(words[word_counter][character_counter]);
+				el.innerHTML = el.innerHTML + '&nbsp';
+				character_counter++ ; 
+
+				console.log(el.innerHTML);
+				// console.log('white space is found!'); // for testing, see how many whitespace
+			}
+			else
+			{ 	// append 1 char by char and put it between div 'magic'
+				el.innerHTML = el.innerHTML+words[word_counter][character_counter++];	
+			}
+
+		// logic -> when to move on to next word in array -> need to +1 -> to capture the last char!
+			if(character_counter == words[word_counter].length+1)
+			{
+				word_counter++; 	//choose a different word
+				character_counter = 0;	//start over with the first character of the word
+				el.innerHTML = '';  //set the html to be blank
+
+				//if we're displaying the last word, go back to the first word
+				if(word_counter == words.length)
+					word_counter = 0;
+			}
+		}
+		setInterval(updateText,300);
+
+		}) ();
+
+	</script>
+
+</body>
+
+</html>
